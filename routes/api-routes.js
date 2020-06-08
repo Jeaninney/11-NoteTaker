@@ -1,10 +1,10 @@
 var dbjson = require("../db/db.json");
+const fs = require("fs");
 
 module.exports = function(app) {
 
   app.get("/api/notes", function(req, res) {
     res.json(dbjson);
-    return dbjson;
   });
 
   app.post("/api/notes", function(req, res) {
