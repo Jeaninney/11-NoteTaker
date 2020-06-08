@@ -1,6 +1,6 @@
 const dbjson = require("../db/db.json");
 const fs = require("fs");
-// let id = dbjson.length + 1;
+
 let noteId;
 
 module.exports = function (app) {
@@ -10,6 +10,7 @@ module.exports = function (app) {
   });
 
   app.post("/api/notes", function (req, res) {
+    
     // if db.json is empty, it sets the first noteID to 1
     if (dbjson.length < 1) {
       noteId = 1;
