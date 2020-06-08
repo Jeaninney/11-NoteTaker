@@ -1,5 +1,6 @@
 var dbjson = require("../db/db.json");
 const fs = require("fs");
+let id = dbjson.length +1;
 
 module.exports = function (app) {
 
@@ -8,6 +9,7 @@ module.exports = function (app) {
   });
 
   app.post("/api/notes", function (req, res) {
+    req.body.id = id++;
     var notes = req.body;
     console.log(notes);
     dbjson.push(notes);
