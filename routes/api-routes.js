@@ -1,6 +1,7 @@
 const dbjson = require("../db/db.json");
 const fs = require("fs");
-let id = dbjson.length + 1;
+// let id = dbjson.length + 1;
+let noteId;
 
 module.exports = function (app) {
 
@@ -9,9 +10,17 @@ module.exports = function (app) {
   });
 
   app.post("/api/notes", function (req, res) {
-    req.body.id = id++;
+    // if db.json is empty, it sets the first noteID to 1
+    if (dbjson.length < 1) {
+      noteId = 1;
+    } else {
+      // if db.json is not empty, then it sets the note ID to the highest noteID +1
+      noteId = parseInt(dbjson[dbjson.length - 1].id) + 1;
+    }
+    // sets the id of the note
+    req.body.id = noteId;
+
     var notes = req.body;
-    console.log(notes);
     dbjson.push(notes);
 
     fs.writeFile("./db/db.json", JSON.stringify(dbjson), function (err) {
@@ -27,7 +36,7 @@ module.exports = function (app) {
         dbjson.splice(i, 1);
       }
     }
-    fs.writeFile("./db/db.json", JSON.stringify(dbjson), function (err){
+    fs.writeFile("./db/db.json", JSON.stringify(dbjson), function (err) {
       if (err) throw (err);
     })
 
